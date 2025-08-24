@@ -2,41 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Cybersecurity Network Scanner Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark cybersecurity theme */
+    --background: 210 20% 6%;
+    --foreground: 120 100% 85%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 210 20% 8%;
+    --card-foreground: 120 100% 85%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 210 20% 8%;
+    --popover-foreground: 120 100% 85%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Matrix green primary */
+    --primary: 120 100% 50%;
+    --primary-foreground: 210 20% 6%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Dark secondary */
+    --secondary: 210 20% 12%;
+    --secondary-foreground: 120 80% 70%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 20% 10%;
+    --muted-foreground: 120 30% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Cyan accent for highlights */
+    --accent: 180 100% 50%;
+    --accent-foreground: 210 20% 6%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Red for alerts/destructive */
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 120 30% 25%;
+    --input: 210 20% 12%;
+    --ring: 120 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.375rem;
+
+    /* Custom cybersecurity colors */
+    --terminal-green: 120 100% 50%;
+    --terminal-cyan: 180 100% 50%;
+    --terminal-amber: 45 100% 60%;
+    --warning-orange: 25 100% 60%;
+    --critical-red: 0 100% 60%;
+    
+    /* Gradients */
+    --gradient-matrix: linear-gradient(135deg, hsl(120 100% 20%), hsl(120 100% 10%));
+    --gradient-terminal: linear-gradient(90deg, hsl(120 100% 50% / 0.1), hsl(180 100% 50% / 0.1));
+    --gradient-scan: linear-gradient(45deg, hsl(120 100% 50% / 0.2), hsl(180 100% 50% / 0.2));
+    
+    /* Shadows and glows */
+    --shadow-glow: 0 0 20px hsl(var(--terminal-green) / 0.3);
+    --shadow-glow-cyan: 0 0 20px hsl(var(--terminal-cyan) / 0.3);
+    --shadow-terminal: 0 4px 20px hsl(210 20% 0% / 0.8);
+
+    --radius: 0.375rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -54,44 +76,6 @@ All colors MUST be HSL.
 
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
 }
 
 @layer base {
@@ -100,6 +84,88 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-mono;
+  }
+}
+
+@layer components {
+  /* Terminal animations */
+  .terminal-cursor::after {
+    content: '█';
+    animation: cursor-blink 1s infinite;
+    color: hsl(var(--terminal-green));
+  }
+  
+  .terminal-line {
+    overflow: hidden;
+    border-right: 2px solid hsl(var(--terminal-green));
+    white-space: nowrap;
+    animation: typing 2s steps(40, end), cursor-blink 0.75s step-end infinite;
+  }
+  
+  .matrix-rain {
+    background: var(--gradient-matrix);
+    animation: matrix-scroll 20s linear infinite;
+  }
+  
+  .glow-border {
+    box-shadow: 0 0 10px hsl(var(--terminal-green) / 0.5);
+    border: 1px solid hsl(var(--terminal-green) / 0.8);
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 10px hsl(var(--terminal-green) / 0.8);
+  }
+
+  .scanning-pulse {
+    animation: scanning-pulse 2s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  .text-terminal-green {
+    color: hsl(var(--terminal-green));
+  }
+  
+  .text-terminal-cyan {
+    color: hsl(var(--terminal-cyan));
+  }
+  
+  .text-terminal-amber {
+    color: hsl(var(--terminal-amber));
+  }
+  
+  .bg-gradient-matrix {
+    background: var(--gradient-matrix);
+  }
+  
+  .bg-gradient-terminal {
+    background: var(--gradient-terminal);
+  }
+}
+
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes matrix-scroll {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+@keyframes scanning-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 5px hsl(var(--terminal-green) / 0.3);
+    border-color: hsl(var(--terminal-green) / 0.5);
+  }
+  50% { 
+    box-shadow: 0 0 20px hsl(var(--terminal-green) / 0.8);
+    border-color: hsl(var(--terminal-green));
   }
 }
